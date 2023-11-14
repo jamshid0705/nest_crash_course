@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post, Req, Res,Param ,Query,UsePipes,ValidationP
 import { Request, Response } from 'express';
 import { CreateUserDto } from 'src/dtos/CreateUser.dto';
 import { UsersService } from './users.service';
+import { ValidateCreateUserPipe } from 'src/pipes/validate-create-user.pipe';
 
 @Controller('users')
 export class UsersController {
@@ -13,7 +14,8 @@ export class UsersController {
 
     @Post()
     @UsePipes(ValidationPipe)
-    async create(@Body() userData:CreateUserDto){
+    async create(@Body(ValidateCreateUserPipe) userData:CreateUserDto){
+        console.log(userData.age)
        return this.UserService.createUser(userData)
     }
 
