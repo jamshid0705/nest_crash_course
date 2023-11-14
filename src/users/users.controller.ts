@@ -14,13 +14,16 @@ export class UsersController {
     @Post()
     @UsePipes(ValidationPipe)
     async create(@Body() userData:CreateUserDto){
-        console.log(userData)
-        return {userData}
+       return this.UserService.createUser(userData)
     }
 
     @Get(':id')
-    async getOne(@Param('id',ParseIntPipe) id:string){ // string ni numberga o'giradi
-        console.log(id)
-        return {id}
+    async getOne(@Param('id') id:string){ 
+        try {
+            return this.UserService.findById(id)
+        } catch (error) {
+            return {error}
+        }
+       
     }
 }
